@@ -1,0 +1,40 @@
+﻿<h3>All Bugs</h3>
+
+@if (Bugs.Count > 0)
+{
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Priority</th>
+        </tr>
+    </thead>
+    @foreach (var bug in Bugs)
+    {
+
+        <tr>
+            <td>@bug.Id</td>
+            <td>@bug.Title</td>
+            <td>@bug.Description</td>
+            <td>@bug.Priority</td>
+        </tr>
+
+    }
+</table>
+}
+else
+{
+    <p>Well done no bugs dude!!</p>
+}
+
+@code 
+{
+    public List<Bug> Bugs { get; set; }
+    protected override void OnInitialized()
+    {
+        Data db = new Data();
+        Bugs = db.GetBugs().OrderBy(x => x.Priority).ToList();
+    }
+}
