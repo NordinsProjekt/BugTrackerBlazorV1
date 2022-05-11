@@ -1,21 +1,35 @@
-﻿@page "/new-bug"
+﻿
+@page "/new-bug"
 <h3>Add New Bug</h3>
 <EditForm OnValidSubmit="HandleValidSubmit" Model="AddBug">
     <DataAnnotationsValidator />
+    <select @bind="@AddBug.ProjectId">
+        @foreach (var project in projectList)
+       {
+           <option value="@project.Id">@project.Title</option>
+       }
+    </select>
     <InputText @bind-Value="@AddBug.Title" placeholder="Enter Title" />
     <InputText @bind-Value="@AddBug.Description" placeholder="Enter Description" />
     <InputNumber @bind-Value="@AddBug.Priority" placeholder="Enter Priority" />
     <button type="submit">Add Bug</button>
     <ValidationSummary />
 </EditForm>
+
 @code {
     [Inject]
     public NavigationManager NavService { get; set; }
     public Bug AddBug { get; set; } = new Bug();
+    public List<Project> projectList = new List<Project>();
+
+    protected override void OnInitialized()
+    {
+        Data db = new Data();
+        projectList = db.GetAllProjects().OrderBy(x => x.Title).ToList();
+    }
 
     protected void HandleValidSubmit()
     {
-        //BugService.AddBug(AddBug);
         Data db = new Data();
         db.SaveBug(AddBug);
         NavService.NavigateTo("");

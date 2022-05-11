@@ -15,5 +15,15 @@ namespace BugTrackerUI
         [Range(1, 5)]
         public int Priority { get; set; }
         public string Created { get; set; }
+        [Required]
+        public int ProjectId { get; set; }
+    }
+    public class Project
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Title { get; set; }
+        [Required]
+        public string Description { get; set; }
     }
 }
