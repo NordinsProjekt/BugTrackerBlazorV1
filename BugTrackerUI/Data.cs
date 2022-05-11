@@ -39,7 +39,7 @@ namespace BugTrackerUI
                 // ensure your connection is set
                 conn.ConnectionString = "server=localhost;database=bugtracker;uid=root;pwd=;";
                 cmd.Connection = conn;
-                cmd.CommandText = "SELECT * FROM bug;";
+                cmd.CommandText = "SELECT bug.*,p.Title FROM bug INNER JOIN projects AS p ON ProjectId = p.Id;";
                 cmd.Connection.Open();
                 MySqlDataReader myReader;
                 using (myReader = cmd.ExecuteReader())
@@ -54,6 +54,7 @@ namespace BugTrackerUI
                         b.Priority = myReader.GetInt32(3);
                         b.Created = myReader.GetString(4);
                         b.ProjectId = myReader.GetInt32(5);
+                        b.ProjectTitle = myReader.GetString(6);
                         //Lägger till objektet i en lista
                         buglist.Add(b);
                     }

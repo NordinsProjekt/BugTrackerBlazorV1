@@ -1,6 +1,7 @@
-﻿<h3>All Bugs</h3>
+﻿@page "/projectbugs/{Id:int}"
+<h3>ProjectBugs</h3>
 
-@if (Bugs.Count > 0)
+@if (@TestData().Count > 0)
 {
 <table>
     <thead>
@@ -9,10 +10,9 @@
             <th>Title</th>
             <th>Description</th>
             <th>Priority</th>
-            <th>Project</th>
         </tr>
     </thead>
-    @foreach (var bug in Bugs)
+    @foreach (var bug in @TestData())
     {
 
         <tr>
@@ -20,7 +20,6 @@
             <td>@bug.Title</td>
             <td>@bug.Description</td>
             <td>@bug.Priority</td>
-            <td>@bug.ProjectTitle</td>
         </tr>
 
     }
@@ -33,10 +32,15 @@ else
 
 @code 
 {
+    [Parameter]
+    public int Id { get; set; }
+
     public List<Bug> Bugs { get; set; }
-    protected override void OnInitialized()
+    protected List<Bug> TestData()
     {
         Data db = new Data();
-        Bugs = db.GetBugs().OrderBy(x => x.ProjectTitle).ThenBy(x => x.Priority).ToList();
+        Bugs = db.GetBugs().Where(x => x.ProjectId == Id).OrderBy(x => x.Priority).ToList();
+        return Bugs;
     }
+
 }

@@ -6,7 +6,20 @@
     <li>
         <NavLink href="/new-bug">New Bug</NavLink>
     </li>
+    @foreach (var project in test())
+   {
+       <li>
+           <NavLink href=@($"/projectbugs/{project.Id}")>@project.Title</NavLink>
+       </li>
+   }
 </ul>
 @code {
+    public List<Project> projectList = new List<Project>();
+    public Data db = new Data();
 
+    protected List<Project> test()
+    {
+        projectList = db.GetAllProjects();
+        return projectList;
+    }
 }

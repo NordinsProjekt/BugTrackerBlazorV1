@@ -178,6 +178,10 @@ input[type=checkbox] {
     padding: 5px;
 }
 
+.main select {
+    padding: 7px;
+}
+
 .main button {
     padding: .375rem .75rem;
     background-color: #2d545e;
