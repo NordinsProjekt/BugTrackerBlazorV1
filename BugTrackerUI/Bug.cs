@@ -18,6 +18,7 @@ namespace BugTrackerUI
         [Required]
         public int ProjectId { get; set; }
         public string ProjectTitle { get; set; }
+        public string CreatedBy { get; set; } = "";
     }
     public class Project
     {
